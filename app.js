@@ -11,7 +11,6 @@ const client = new Client({
     Intents.FLAGS.GUILD_VOICE_STATES,
     Intents.FLAGS.GUILD_INTEGRATIONS,
   ]});
-const {token} = require("./ayarlar.json");
 
 const {Player} = require("discord-player");
 global.client = client;
@@ -48,7 +47,7 @@ fs.readdir("./events/", (_err, files) => {
 
 client.on("ready", async () => {
   
-    const rest = new REST({ version: "9" }).setToken(token);
+    const rest = new REST({ version: "9" }).setToken(process.env.token);
 
   try {
     await rest.put(Routes.applicationCommands(client.user.id), {
@@ -81,4 +80,4 @@ player.on("channelEmpty", (queue) => {
 player.on("queueEnd", (queue) => {
   queue.metadata.send("✅ | Sıra tamamlandı!");
 });
-client.login(token);
+client.login(process.env.token);
